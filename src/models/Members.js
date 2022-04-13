@@ -9,7 +9,7 @@ const MemberSchema = mongoose.Schema({
     type: String,
     default: 'http://cdn.onlinewebfonts.com/svg/img_568657.png',
   },
-  designation: {
+  title: {
     type: String
   },
   about: {

@@ -1,12 +1,10 @@
 const express = require('express');
 require('dotenv/config');
 const app = express();
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cors = require('cors')
 
-
-// Middleware
 app.use(bodyParser.json());
 app.use(cors())
 
@@ -18,7 +16,7 @@ mongoose.connect(process.env.DB_URL)
 
 
 //Routes
-
+app.use('/api', require('./src/routers/api'));
 
 
 // Listening to the server
