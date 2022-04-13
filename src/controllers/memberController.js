@@ -19,7 +19,7 @@ exports.addMember = async (req, res) => {
 exports.getMembers = async (req, res) => {
   try {
     const getMember = await Members.find(req.query.id ? { _id: req.query.id } : null)
-    res.json(getMember);
+    res.json(getMember.sort((a, b) => b.createdAt - a.createdAt));
   } catch (err) {
     res.json({ message: err })
   }
