@@ -46,7 +46,7 @@ exports.updateMember = async (req, res) => {
   }
 }
 
-// Delete member details
+// Delete member
 exports.deleteMember = async (req, res) => {
   try {
     const delMember = await Members.remove({ _id: req.query.id })
