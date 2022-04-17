@@ -4,6 +4,7 @@ const router = express.Router();
 // Controllers
 const memberController = require('../controllers/memberController');
 const conversationController = require('../controllers/conversationController');
+const speakerController = require('../controllers/speakerController');
 
 
 
@@ -28,27 +29,30 @@ router.delete('/member', memberController.deleteMember);
 // ----- Series API ----- //
 
 // Add Series
-router.post('/series', conversationController.addConversation);
+router.post('/conversation', conversationController.addConversation);
 
 // Get Series
 // pass /series/?id=123123, to get series by Id
-router.get('/series', conversationController.getConversation);
+router.get('/conversation', conversationController.getConversation);
 
 // Update Series
 // pass /series/?id=1231231
-router.put('/series', conversationController.updateConversation);
+router.put('/conversation', conversationController.updateConversation);
 
 // Delete Series
 // pass /series/?id=1231231
-router.delete('/series', conversationController.deleteConversation);
+router.delete('/conversation', conversationController.deleteConversation);
 
 
 
 // ----- Speakers API ----- //
 
 // Add Speaker
+router.post('/speaker', speakerController.addSpeaker);
 
 // Get Speaker
+// pass /speaker/?id=123123, to get speaker by Id
+router.get('/speaker', speakerController.getSpeaker)
 
 // Update Speaker
 

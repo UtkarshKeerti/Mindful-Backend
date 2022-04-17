@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const SeriesSchema = mongoose.Schema({
+const conversationSchema = mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -15,4 +15,4 @@ const SeriesSchema = mongoose.Schema({
   }]
 });
 
-module.exports = mongoose.model('Coversations', SeriesSchema);
+module.exports = mongoose.model('Coversations', conversationSchema);

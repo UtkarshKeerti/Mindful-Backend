@@ -19,9 +19,12 @@ exports.addConversation = async (req, res) => {
 exports.getConversation = async (req, res) => {
   try {
     const getConversation = await Conversations.find(req.query.id ? { _id: req.query.id } : null)
+      .populate('events')
+      .populate('speakers')
+
     res.json(getConversation.sort((a, b) => b.createdAt - a.createdAt));
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
