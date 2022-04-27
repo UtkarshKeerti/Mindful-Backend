@@ -20,4 +20,4 @@ app.use('/api', require('./src/routers/api'));
 
 
 // Listening to the server
-app.listen(process.env.SERVER_PORT, () => console.log('Server listening on port: ', process.env.SERVER_PORT))
+app.listen(process.env.PORT, () => console.log('Server listening on port: ', process.env.PORT))
