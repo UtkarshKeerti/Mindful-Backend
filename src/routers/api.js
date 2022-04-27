@@ -13,8 +13,8 @@ const speakerController = require('../controllers/speakerController');
 // Post member
 router.post('/member', memberController.addMember);
 
-// Get member
-// pass /member/?id=123123, to get member by Id
+// Get members
+// pass /member/?id=123123, to get member detials by Id
 router.get('/member', memberController.getMembers);
 
 // Update member
@@ -26,21 +26,21 @@ router.put('/member', memberController.updateMember);
 router.delete('/member', memberController.deleteMember);
 
 
-// ----- Series API ----- //
+// ----- Series/Conversation API ----- //
 
-// Add Series
+// Add conversation
 router.post('/conversation', conversationController.addConversation);
 
-// Get Series
-// pass /series/?id=123123, to get series by Id
+// Get conversations
+// pass /conversation/?id=123123, to get conversation details by Id
 router.get('/conversation', conversationController.getConversation);
 
-// Update Series
-// pass /series/?id=1231231
+// Update conversation
+// pass /conversation/?id=1231231
 router.put('/conversation', conversationController.updateConversation);
 
-// Delete Series
-// pass /series/?id=1231231
+// Delete conversation
+// pass /conversation/?id=1231231
 router.delete('/conversation', conversationController.deleteConversation);
 
 
@@ -59,6 +59,7 @@ router.get('/speaker', speakerController.getSpeaker)
 // Delete Speaker
 
 
+
 // ----- Event API ----- //
 
 // Add Event
@@ -69,6 +70,29 @@ router.get('/speaker', speakerController.getSpeaker)
 
 // Delete Event
 
+
+
+// ----- Publications API ----- //
+
+// Add publication
+
+// Get Publication
+
+// Update publication
+
+// Delete Publication
+
+
+
+// ----- Contact us API ----- //
+
+// Add ContactUs data
+
+// Get ContactUs data
+
+// Update
+
+// Delete
 
 
 module.exports = router

@@ -8,9 +8,9 @@ exports.addSpeaker = async (req, res) => {
 
   try {
     const addSpeaker = await speaker.save();
-    res.json(addSpeaker);
+    res.status(200).json(addSpeaker);
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
@@ -18,10 +18,12 @@ exports.addSpeaker = async (req, res) => {
 // pass id in query.id to get a particular speaker
 exports.getSpeaker = async (req, res) => {
   try {
-    const getSpeaker = await Speakers.find(req.query.id ? { _id: req.query.id } : null);
-    res.json(getSpeaker.sort((a, b) => b.createdAt - a.createdAt));
+    const getSpeaker = await Speakers.find(req.query.id ? { _id: req.query.id } : null)
+      .populate('conversations')
+
+    res.status(200).json(getSpeaker.sort((a, b) => b.createdAt - a.createdAt));
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 

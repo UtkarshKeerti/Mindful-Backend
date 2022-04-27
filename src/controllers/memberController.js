@@ -8,9 +8,9 @@ exports.addMember = async (req, res) => {
 
   try {
     const addMember = await member.save();
-    res.json(addMember);
+    res.status(200).json(addMember);
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
@@ -19,9 +19,9 @@ exports.addMember = async (req, res) => {
 exports.getMembers = async (req, res) => {
   try {
     const getMember = await Members.find(req.query.id ? { _id: req.query.id } : null)
-    res.json(getMember.sort((a, b) => b.createdAt - a.createdAt));
+    res.status(200).json(getMember.sort((a, b) => b.createdAt - a.createdAt));
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
@@ -32,26 +32,21 @@ exports.updateMember = async (req, res) => {
       { _id: req.query.id },
       {
         // Sending only the changed field also works. No need to send the entire object.
-        $set: {
-          name: req.body.name,
-          image: req.body.image,
-          title: req.body.title,
-          about: req.body.about
-        }
+        $set: req.body
       }
     )
-    res.json(updateMember)
+    res.status(200).json(updateMember)
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
 // Delete member
 exports.deleteMember = async (req, res) => {
   try {
-    const delMember = await Members.remove({ _id: req.query.id })
-    res.json(delMember)
+    const delMember = await Members.deleteOne({ _id: req.query.id })
+    res.status(200).json({ message: "Member Deleted!" })
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }

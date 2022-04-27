@@ -12,7 +12,11 @@ const conversationSchema = mongoose.Schema({
   speakers: [{
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Speakers'
-  }]
+  }],
+  about: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Coversations', conversationSchema);

@@ -13,10 +13,10 @@ const SpeakerSchema = mongoose.Schema({
     type: String
   },
   // Add conversation details for each speakear, if analysis is required.
-  // conversations: [{
-  //   type: mongoose.SchemaTypes.ObjectId,
-  //   ref: 'Conversations'
-  // }]
+  conversations: [{
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Conversations'
+  }]
 },
   { timestamps: true }
 );

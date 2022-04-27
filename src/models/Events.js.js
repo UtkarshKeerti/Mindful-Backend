@@ -9,19 +9,19 @@ const EventSchema = mongoose.Schema({
   description: { type: String },
   date: { type: Date },
   time: { type: String },
-  series: {
+  coversation: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Series'
+    ref: 'Coversations'
   },
   eventRecording: { type: String },
-  registeredUser: [{
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Users'
-  }],
-  // Not Confirmed ---
-  questions: [{
-    type: mongoose.SchemaTypes.ObjectId
-  }]
+  //--- ONly for data collection purpose
+  // registeredUser: [{
+  //   type: mongoose.SchemaTypes.ObjectId,
+  //   ref: 'Users'
+  // }],
+  // questions: [{
+  //   type: mongoose.SchemaTypes.ObjectId
+  // }]
 },
   { timestamps: true }
 );

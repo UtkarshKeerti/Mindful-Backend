@@ -6,7 +6,8 @@ const UserSchema = mongoose.Schema({
   age: { type: Number },
   // These questions will be asked during event registration, and will be event related only
   questions: [{
-    type: mongoose.SchemaTypes.ObjectId
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Questions'
   }]
 },
   { timestamps: true }

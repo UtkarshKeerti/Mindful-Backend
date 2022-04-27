@@ -8,9 +8,9 @@ exports.addConversation = async (req, res) => {
 
   try {
     const addConversation = await conversation.save();
-    res.json(addConversation);
+    res.status(200).json(addConversation);
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
@@ -22,7 +22,7 @@ exports.getConversation = async (req, res) => {
       .populate('events')
       .populate('speakers')
 
-    res.json(getConversation.sort((a, b) => b.createdAt - a.createdAt));
+    res.status(200).json(getConversation.sort((a, b) => b.createdAt - a.createdAt));
   } catch (err) {
     res.status(500).json({ message: err })
   }
@@ -34,16 +34,12 @@ exports.updateConversation = async (req, res) => {
     const updateConversation = await Conversations.updateOne(
       { _id: req.query.id },
       {
-        $set: {
-          name: req.body.name,
-          events: req.body.events,
-          speakers: req.body.speakers
-        }
+        $set: req.body
       }
     )
-    res.json(updateConversation)
+    res.status(200).json(updateConversation)
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
 
@@ -51,8 +47,8 @@ exports.updateConversation = async (req, res) => {
 exports.deleteConversation = async (req, res) => {
   try {
     const delConversation = await Conversations.deleteOne({ _id: req.query.id })
-    res.json(delConversation);
+    res.status(200).json({ message: "Conversation Deleted!" });
   } catch (err) {
-    res.json({ message: err })
+    res.status(500).json({ message: err })
   }
 }
