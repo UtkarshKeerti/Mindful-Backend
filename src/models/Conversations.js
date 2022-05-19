@@ -7,11 +7,11 @@ const conversationSchema = mongoose.Schema({
   },
   events: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Events'
+    ref: 'events'
   }],
   speakers: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Speakers'
+    ref: 'speakers'
   }],
   about: {
     type: String,
@@ -19,4 +19,4 @@ const conversationSchema = mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Coversations', conversationSchema);
+module.exports = mongoose.model('conversations', conversationSchema);

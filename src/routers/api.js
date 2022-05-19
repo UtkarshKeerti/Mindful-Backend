@@ -5,6 +5,7 @@ const router = express.Router();
 const memberController = require('../controllers/memberController');
 const conversationController = require('../controllers/conversationController');
 const speakerController = require('../controllers/speakerController');
+const eventController = require('../controllers/eventController');
 
 
 
@@ -55,16 +56,23 @@ router.post('/speaker', speakerController.addSpeaker);
 router.get('/speaker', speakerController.getSpeaker)
 
 // Update Speaker
+// pass /speaker/?id=1231231
+// router.put('/speaker');
 
 // Delete Speaker
+// pass /speaker/?id=1231231
+// router.delete('/speaker');
 
 
 
 // ----- Event API ----- //
 
 // Add Event
+router.post('/event', eventController.addEvent);
 
 // Get Event
+// pass /event/?id=123123, to get speaker by Id
+router.get('/event', eventController.getEvent);
 
 // Update Event
 

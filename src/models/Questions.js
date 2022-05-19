@@ -7,4 +7,4 @@ const QuestionSchema = mongoose.Schema({
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Questions', QuestionSchema)
+module.exports = mongoose.model('questions', QuestionSchema)

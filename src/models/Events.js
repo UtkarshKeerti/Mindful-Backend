@@ -7,11 +7,11 @@ const EventSchema = mongoose.Schema({
   },
   image: { type: String },
   description: { type: String },
-  date: { type: Date },
+  date: { type: String },
   time: { type: String },
-  coversation: {
+  conversation: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Coversations'
+    ref: 'conversations'
   },
   eventRecording: { type: String },
   //--- ONly for data collection purpose
@@ -26,4 +26,4 @@ const EventSchema = mongoose.Schema({
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Events', EventSchema);
+module.exports = mongoose.model('events', EventSchema);

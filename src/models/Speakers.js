@@ -15,10 +15,10 @@ const SpeakerSchema = mongoose.Schema({
   // Add conversation details for each speakear, if analysis is required.
   conversations: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Conversations'
+    ref: 'conversations'
   }]
 },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Speakers", SpeakerSchema)
+module.exports = mongoose.model("speakers", SpeakerSchema)

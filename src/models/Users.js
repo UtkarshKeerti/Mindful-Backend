@@ -7,10 +7,10 @@ const UserSchema = mongoose.Schema({
   // These questions will be asked during event registration, and will be event related only
   questions: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Questions'
+    ref: 'questions'
   }]
 },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Users', UserSchema)
+module.exports = mongoose.model('users', UserSchema)
