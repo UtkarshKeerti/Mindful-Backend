@@ -9,16 +9,21 @@ exports.addEvent = async (req, res) => {
   try {
     const events = new Events(req.body);
 
-    // Pushing the Event to Conversation
-    const convo = await Conversations.findById(events.conversation)
-    convo.events.push(events._id);
-    // Add speakers in convoversation list
-    convo.speakers.push([...events.speakers])
+    // Pushing the Event and its speakers to Conversation
+    const convoSpk = await Conversations.updateOne(
+      { _id: events.conversation },
+      {
+        $addToSet: {
+          events: events._id,
+          speakers: {
+            $each: events.speakers
+          }
+        }
+      },
+      { multi: true }
+    )
 
     await events.save();
-    await convo.save();
-
-    console.log('AAAA', convo)
 
     res.status(200).json({ message: "Event added!" });
 
@@ -66,3 +71,25 @@ exports.updateEvent = async (req, res) => {
 
 
 // Delete Event
+exports.deleteEvent = async (req, res) => {
+  try {
+    const eve = await Events.findById(req.query.id);
+    // Removing Event from conversation
+    const conversation = await Conversations.updateOne(
+      { _id: eve.conversation },
+      {
+        $pull: {
+          events: {
+            $in: [req.query.id]
+          }
+        }
+      },
+      { multi: true }
+    )
+    const delEvent = await Events.deleteOne({ _id: req.query.id })
+
+    res.status(200).json({ message: 'Event deleted!', conversation });
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}

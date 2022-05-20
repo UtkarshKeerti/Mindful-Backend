@@ -79,6 +79,7 @@ router.get('/event', eventController.getEvent);
 router.put('/event', eventController.updateEvent);
 
 // Delete Event
+router.delete('/event', eventController.deleteEvent);
 
 
 
