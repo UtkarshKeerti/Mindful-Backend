@@ -14,6 +14,10 @@ const EventSchema = mongoose.Schema({
     ref: 'conversations'
   },
   eventRecording: { type: String },
+  speakers: [{
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'speakers'
+  }]
   //--- ONly for data collection purpose
   // registeredUser: [{
   //   type: mongoose.SchemaTypes.ObjectId,

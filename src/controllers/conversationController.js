@@ -18,11 +18,20 @@ exports.addConversation = async (req, res) => {
 // pass id in query.id to get a particular Conversation
 exports.getConversation = async (req, res) => {
   try {
-    const getConversation = await Conversations.find(req.query.id ? { _id: req.query.id } : null)
-      .populate('events')
-      .populate('speakers')
+    let getConversation;
 
-    res.status(200).json(getConversation.sort((a, b) => b.createdAt - a.createdAt));
+    if (req.query.id) {
+      getConversation = await Conversations.findById(req.query.id)
+        .populate('events')
+        .populate('speakers')
+
+    } else getConversation = await Conversations.find(); // get all
+
+    // Sort the response if it is in array (in case of get all), else return the object as it is.
+    res.status(200).json(
+      getConversation.length ? getConversation.sort((a, b) => b.createdAt - a.createdAt)
+        : getConversation
+    );
   } catch (err) {
     res.status(500).json({ message: err })
   }

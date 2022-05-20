@@ -75,6 +75,8 @@ router.post('/event', eventController.addEvent);
 router.get('/event', eventController.getEvent);
 
 // Update Event
+// pass /Event/?id=1231231
+router.put('/event', eventController.updateEvent);
 
 // Delete Event
 
