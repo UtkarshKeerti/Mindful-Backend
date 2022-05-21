@@ -8,7 +8,7 @@ exports.addSpeaker = async (req, res) => {
 
   try {
     const addSpeaker = await speaker.save();
-    res.status(200).json(addSpeaker);
+    res.status(200).json({ message: 'Speaker added!' });
   } catch (err) {
     res.status(500).json({ message: err })
   }
@@ -22,7 +22,7 @@ exports.getSpeaker = async (req, res) => {
 
     if (req.query.id) {
       getSpeaker = await Speakers.findById(req.query.id)
-        .populate('conversations')
+      // .populate('conversations')
 
     } else getSpeaker = await Speakers.find(); //get all
 
@@ -39,6 +39,20 @@ exports.getSpeaker = async (req, res) => {
 
 
 // Update Speaker details
+exports.updateSpeaker = async (req, res) => {
+  try {
+    const updateSpeaker = await Speakers.updateOne(
+      { _id: req.query.id },
+      {
+        // Sending only the changed field also works. No need to send the entire object.
+        $set: req.body
+      }
+    )
+    res.status(200).json({ message: 'Speaker details updated!' });
 
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}
 
 // Delete Speaker

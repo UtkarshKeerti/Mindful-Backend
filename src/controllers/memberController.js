@@ -8,7 +8,7 @@ exports.addMember = async (req, res) => {
 
   try {
     const addMember = await member.save();
-    res.status(200).json(addMember);
+    res.status(200).json({ message: 'Member Added!' });
   } catch (err) {
     res.status(500).json({ message: err })
   }
@@ -18,8 +18,12 @@ exports.addMember = async (req, res) => {
 // pass id in query.id to get a particular member
 exports.getMembers = async (req, res) => {
   try {
-    const getMember = await Members.find(req.query.id ? { _id: req.query.id } : null)
-    res.status(200).json(getMember.sort((a, b) => b.createdAt - a.createdAt));
+    let getMember;
+    if (req.query.id) {
+      getMember = await Members.findById(req.query.id)
+    } else getMember = await Members.find();
+
+    res.status(200).json(getMember);
   } catch (err) {
     res.status(500).json({ message: err })
   }
@@ -35,7 +39,7 @@ exports.updateMember = async (req, res) => {
         $set: req.body
       }
     )
-    res.status(200).json(updateMember)
+    res.status(200).json({ message: 'Member details updated!' })
   } catch (err) {
     res.status(500).json({ message: err })
   }
