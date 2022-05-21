@@ -26,11 +26,7 @@ exports.getSpeaker = async (req, res) => {
 
     } else getSpeaker = await Speakers.find(); //get all
 
-    // Sort the response if it is in array (in case of get all), else return the object as it is.
-    res.status(200).json(
-      getSpeaker.length ? getSpeaker.sort((a, b) => b.createdAt - a.createdAt)
-        : getSpeaker
-    );
+    res.status(200).json(getSpeaker);
 
   } catch (err) {
     res.status(500).json({ message: err })
