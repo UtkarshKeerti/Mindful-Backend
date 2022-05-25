@@ -1,12 +1,28 @@
 const express = require('express');
 const router = express.Router();
 
+const multer = require('multer');
+// storage policy for multer
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')
+    cb(null, true)
+  else cb(Error('upload only jpeg, jpg, png file'), false)
+}
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+
 // Controllers
 const memberController = require('../controllers/memberController');
 const conversationController = require('../controllers/conversationController');
 const speakerController = require('../controllers/speakerController');
 const eventController = require('../controllers/eventController');
-
 
 
 // ----- Members API ----- //
@@ -30,7 +46,10 @@ router.delete('/member', memberController.deleteMember);
 // ----- Series/Conversation API ----- //
 
 // Add conversation
-router.post('/conversation', conversationController.addConversation);
+router.post('/conversation',
+  upload.single('image'),
+  conversationController.addConversation
+);
 
 // Get conversations
 // pass /conversation/?id=123123, to get conversation details by Id
@@ -55,6 +74,9 @@ router.post('/speaker', speakerController.addSpeaker);
 // pass /speaker/?id=123123, to get speaker by Id
 router.get('/speaker', speakerController.getSpeaker)
 
+// Get Events from conversations
+router.get('/convo-speaker/:id', speakerController.getConvoSpeaker)
+
 // Update Speaker
 // pass /speaker/?id=1231231
 router.put('/speaker', speakerController.updateSpeaker);
@@ -73,6 +95,9 @@ router.post('/event', eventController.addEvent);
 // Get Event
 // pass /event/?id=123123, to get speaker by Id
 router.get('/event', eventController.getEvent);
+
+// Get Events from conversations
+router.get('/convo-event/:id', eventController.getConvoEvent)
 
 // Update Event
 // pass /Event/?id=1231231
