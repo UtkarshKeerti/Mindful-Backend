@@ -4,7 +4,13 @@ const Conversations = require('../models/Conversations');
 
 // Add Conversation
 exports.addConversation = async (req, res) => {
-  const conversation = new Conversations(req.body);
+  const conversation = new Conversations({
+    name: req.body.name,
+    image: req.file.path,
+    events: req.body.events,
+    speakers: req.body.speakers,
+    about: req.body.about
+  });
 
   try {
     const addConversation = await conversation.save();

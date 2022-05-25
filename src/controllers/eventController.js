@@ -1,6 +1,5 @@
 // Models
 const Events = require('../models/Events');
-const Speakers = require('../models/Speakers');
 const Conversations = require('../models/Conversations');
 
 
@@ -50,6 +49,26 @@ exports.getEvent = async (req, res) => {
       getEvent.length ? getEvent.sort((a, b) => b.createdAt - a.createdAt)
         : getEvent
     );
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}
+
+// Get Event based on Convo ID
+exports.getConvoEvent = async (req, res) => {
+  try {
+    const convoEvent = await Conversations.findById(req.params.id)
+      .select('events')
+      .populate('events')
+      .populate({
+        path: 'events',
+        populate: {
+          path: 'speakers'
+        }
+      })
+
+    res.status(200).json(convoEvent.events.sort((a, b) => b.createdAt - a.createdAt));
+
   } catch (err) {
     res.status(500).json({ message: err })
   }

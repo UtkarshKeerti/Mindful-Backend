@@ -1,5 +1,6 @@
 // Models
 const Speakers = require('../models/Speakers');
+const Conversations = require('../models/Conversations');
 
 
 // Add Speaker
@@ -27,6 +28,19 @@ exports.getSpeaker = async (req, res) => {
     } else getSpeaker = await Speakers.find(); //get all
 
     res.status(200).json(getSpeaker);
+
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}
+
+// Get speaker based on convo ID
+exports.getConvoSpeaker = async (req, res) => {
+  try {
+    const convoSpeaker = await Conversations.findById(req.params.id)
+      .select('speakers')
+      .populate('speakers')
+    res.status(200).json(convoSpeaker.speakers)
 
   } catch (err) {
     res.status(500).json({ message: err })

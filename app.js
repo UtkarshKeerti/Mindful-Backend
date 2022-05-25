@@ -8,6 +8,8 @@ const cors = require('cors')
 app.use(bodyParser.json());
 app.use(cors())
 
+app.use('/uploads', express.static('uploads'))
+
 
 // Connect to DB
 mongoose.connect(process.env.DB_URL)
