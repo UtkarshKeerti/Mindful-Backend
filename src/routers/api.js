@@ -51,6 +51,9 @@ router.post('/conversation',
   conversationController.addConversation
 );
 
+// get the list of conversatoin
+router.get('/conversation-list', conversationController.getConvoList);
+
 // Get conversations
 // pass /conversation/?id=123123, to get conversation details by Id
 router.get('/conversation', conversationController.getConversation);

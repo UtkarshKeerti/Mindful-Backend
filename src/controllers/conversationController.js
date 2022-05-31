@@ -20,6 +20,21 @@ exports.addConversation = async (req, res) => {
   }
 }
 
+// Get the list of conversations
+exports.getConvoList = async (req, res) => {
+  try {
+    const convoList = await Conversations.find()
+      .select('name')
+    // _id comes by default
+
+    res.status(200).json(convoList.sort((a, b) => b.createdAt - a.createdAt));
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+
+}
+
+
 // Get Conversation
 // pass id in query.id to get a particular Conversation
 exports.getConversation = async (req, res) => {
