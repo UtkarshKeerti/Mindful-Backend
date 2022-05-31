@@ -63,7 +63,8 @@ exports.getConvoEvent = async (req, res) => {
       .populate({
         path: 'events',
         populate: {
-          path: 'speakers'
+          path: 'speakers',
+          select: 'name'
         }
       })
 
