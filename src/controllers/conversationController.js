@@ -1,20 +1,42 @@
 // Models
 const Conversations = require('../models/Conversations');
 const Events = require('../models/Events');
+const fs = require('fs');
+const path = require('path')
 
 
 // Add Conversation
-exports.addConversation = async (req, res) => {
-  const conversation = new Conversations({
-    name: req.body.name,
-    events: req.body.events,
-    speakers: req.body.speakers,
-    about: req.body.about
-  });
+// NO async due to multer image thingy
+exports.addConversation = (req, res) => {
+
+  // const obj = {
+  //   name: req.body.name,
+  //   about: req.body.about,
+  //   events: req.body.events,
+  //   speakers: req.body.speakers,
+  //   image: {
+  //     data: fs.readFileSync(path.join(appRootPath + '/uploads/' + req.file.filename)),
+  //     contentType: req.file.mimetype
+  //   }
+  // }
+
+  // console.log('FILEE', obj)
+  // console.log('BASE', obj.image.data.toString('base64'))
 
   try {
-    const addConversation = await conversation.save();
-    res.status(200).json(addConversation);
+    const obj = {
+      name: req.body.name,
+      about: req.body.about,
+      events: req.body.events,
+      speakers: req.body.speakers,
+      image: `http://localhost:2020/uploads/${req.file.filename}`
+    }
+    const conversation = new Conversations(obj)
+    const convoSave = conversation.save();
+
+    if (!conversation.name) throw "Conversation not saved"
+    res.status(200).json("Conversation Added!");
+
   } catch (err) {
     res.status(500).json({ message: err })
   }
@@ -31,7 +53,6 @@ exports.getConvoList = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err })
   }
-
 }
 
 

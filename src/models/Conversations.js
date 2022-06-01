@@ -5,7 +5,7 @@ const conversationSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  image: { type: String },
+  image: String,
   events: [{
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'events'
