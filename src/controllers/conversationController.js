@@ -3,6 +3,8 @@ const Conversations = require('../models/Conversations');
 const Events = require('../models/Events');
 const fs = require('fs');
 const path = require('path')
+require('dotenv/config');
+
 
 
 // Add Conversation
@@ -29,7 +31,7 @@ exports.addConversation = (req, res) => {
       about: req.body.about,
       events: req.body.events,
       speakers: req.body.speakers,
-      image: `http://localhost:2020/uploads/${req.file.filename}`
+      image: `${process.env.SERVER_URL}/uploads/${req.file.filename}`
     }
     const conversation = new Conversations(obj)
     const convoSave = conversation.save();
