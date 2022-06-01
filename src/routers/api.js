@@ -86,7 +86,7 @@ router.put('/speaker', speakerController.updateSpeaker);
 
 // Delete Speaker
 // pass /speaker/?id=1231231
-// router.delete('/speaker');
+router.delete('/speaker', speakerController.deleteSpeaker);
 
 
 

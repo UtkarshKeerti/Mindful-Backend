@@ -1,6 +1,7 @@
 // Models
 const Speakers = require('../models/Speakers');
 const Conversations = require('../models/Conversations');
+const Events = require('../models/Events');
 
 
 // Add Speaker
@@ -66,3 +67,53 @@ exports.updateSpeaker = async (req, res) => {
 }
 
 // Delete Speaker
+exports.deleteSpeaker = async (req, res) => {
+  try {
+    const arrayOfIds = req.query.id.split(',')
+
+    // Remove speakers from Conversation
+    const convo = await Conversations.updateMany(
+      {
+        speakers: {
+          $in: arrayOfIds
+        }
+      },
+      {
+        $pull: {
+          speakers: {
+            $in: arrayOfIds
+          }
+        }
+      }
+    );
+
+    // Remove speakers from Events
+    const eve = await Events.updateMany(
+      {
+        speakers: {
+          $in: arrayOfIds
+        }
+      },
+      {
+        $pull: {
+          speakers: {
+            $in: arrayOfIds
+          }
+        }
+      }
+    );
+
+    const delSpeaker = await Speakers.deleteMany(
+      {
+        _id: {
+          $in: arrayOfIds
+        }
+      }
+    );
+
+    res.status(200).json({ message: `${delSpeaker.deletedCount} speaker(s) deleted!` })
+
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}

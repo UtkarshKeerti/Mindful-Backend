@@ -1,12 +1,12 @@
 // Models
 const Conversations = require('../models/Conversations');
+const Events = require('../models/Events');
 
 
 // Add Conversation
 exports.addConversation = async (req, res) => {
   const conversation = new Conversations({
     name: req.body.name,
-    image: req.file.path,
     events: req.body.events,
     speakers: req.body.speakers,
     about: req.body.about
@@ -77,6 +77,16 @@ exports.updateConversation = async (req, res) => {
 exports.deleteConversation = async (req, res) => {
   try {
     const delConversation = await Conversations.deleteOne({ _id: req.query.id })
+
+    // Delete all events under that Conversation
+    const eves = await Events.deleteMany(
+      {
+        conversation: {
+          $in: [req.query.id]
+        }
+      },
+    )
+
     res.status(200).json({ message: "Conversation Deleted!" });
   } catch (err) {
     res.status(500).json({ message: err })

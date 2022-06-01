@@ -90,25 +90,35 @@ exports.updateEvent = async (req, res) => {
 }
 
 
-// Delete Event
+// Delete Event(s)
 exports.deleteEvent = async (req, res) => {
   try {
-    const eve = await Events.findById(req.query.id);
-    // Removing Event from conversation
-    const conversation = await Conversations.updateOne(
+    const arrayOfIds = req.query.id.split(',')
+    const eve = await Events.findById(arrayOfIds[0]);
+
+    // Removing Event(s) from conversation.events array
+    const convo = await Conversations.updateOne(
       { _id: eve.conversation },
       {
         $pull: {
           events: {
-            $in: [req.query.id]
-          }
+            $in: arrayOfIds
+          },
+          // TODO: Remove event-speakers as well.
         }
-      },
-      { multi: true }
-    )
-    const delEvent = await Events.deleteOne({ _id: req.query.id })
+      }
+    );
 
-    res.status(200).json({ message: 'Event deleted!', conversation });
+    // Delete Event(s)
+    const delEvent = await Events.deleteMany(
+      {
+        _id: {
+          $in: arrayOfIds
+        }
+      }
+    );
+
+    res.status(200).json({ message: `${delEvent.deletedCount} event(s) deleted!` });
   } catch (err) {
     res.status(500).json({ message: err })
   }
