@@ -11,13 +11,21 @@ global.appRootPath = path.resolve(__dirname)
 app.use(bodyParser.json());
 app.use(cors())
 
-app.use('/uploads', express.static('uploads'))
+// app.use('/uploads', express.static('uploads'))
 
 
 // Connect to DB
 mongoose.connect(process.env.DB_URL)
   .then((data) => console.log(`Connected with DB: ${data.connection.host}`))
   .catch((err) => console.log('Error in DB Connection', err));
+
+// // Create bucket
+// mongoose.connection.on("connected", () => {
+//   var db = mongoose.connection.db
+//   global.bucket = new mongoose.mongo.GridFSBucket(db, {
+//     bucketName: "uploads"
+//   });
+// })
 
 
 //Routes

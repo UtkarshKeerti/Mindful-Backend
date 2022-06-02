@@ -5,7 +5,10 @@ const conversationSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  image: String,
+  image: {
+    data: String,
+    filename: String
+  },
   events: [{
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'events'

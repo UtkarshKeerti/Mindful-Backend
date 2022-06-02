@@ -1,7 +1,43 @@
 const express = require('express');
 const router = express.Router();
-
 const multer = require('multer');
+// const mongoose = require('mongoose');
+// const { GridFsStorage } = require('multer-gridfs-storage');
+// const Grid = require('gridfs-stream');
+// require('dotenv/config');
+
+// Controllers
+const memberController = require('../controllers/memberController');
+const conversationController = require('../controllers/conversationController');
+const speakerController = require('../controllers/speakerController');
+const eventController = require('../controllers/eventController');
+
+
+// const conn = mongoose.createConnection(process.env.DB_URL);
+
+// Init gfs
+// let gfs;
+// conn.once('open', () => {
+//   // Init stream
+//   gfs = Grid(conn.db, mongoose.mongo);
+//   gfs.collection('uploads');
+// })
+
+// Storage engine
+// const storage = new GridFsStorage({
+//   url: process.env.DB_URL,
+//   file: (req, file) => {
+//     return new Promise((resolve, reject) => {
+//       const filename = Date.now() + '_' + file.originalname;
+//       const fileInfo = {
+//         filename: filename,
+//         bucketName: 'uploads'
+//       };
+//       resolve(fileInfo)
+//     });
+//   }
+// });
+
 // storage policy for multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -17,12 +53,6 @@ const fileFilter = (req, file, cb) => {
   else cb(Error('upload only jpeg, jpg, png file'), false)
 }
 const upload = multer({ storage: storage, fileFilter: fileFilter });
-
-// Controllers
-const memberController = require('../controllers/memberController');
-const conversationController = require('../controllers/conversationController');
-const speakerController = require('../controllers/speakerController');
-const eventController = require('../controllers/eventController');
 
 
 // ----- Members API ----- //
