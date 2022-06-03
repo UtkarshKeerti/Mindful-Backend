@@ -3,6 +3,7 @@ const Conversations = require('../models/Conversations');
 const Events = require('../models/Events');
 const fs = require('fs');
 const path = require('path')
+require('dotenv/config');
 
 
 // Add Conversation
@@ -24,12 +25,13 @@ exports.addConversation = async (req, res) => {
 
   try {
 
-    const data = fs.readFileSync(path.join(appRootPath + '/uploads/' + req.file.filename)).toString('base64')
+    // const data = fs.readFileSync(path.join(appRootPath + '/uploads/' + req.file.filename)).toString('base64')
 
     const obj = {
       ...req.body,
       image: {
-        data: `data:${req.file.mimetype};base64,${data}`,
+        data: `${process.env.SERVER_URL}/uploads/${req.file.filename}`,
+        // data: `data:${req.file.mimetype};base64,${data}`,
         filename: req.file.filename
       }
     }
