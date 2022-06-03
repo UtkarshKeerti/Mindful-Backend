@@ -11,7 +11,7 @@ global.appRootPath = path.resolve(__dirname)
 app.use(bodyParser.json());
 app.use(cors())
 
-app.use('/uploads', express.static('uploads'))
+// app.use('/uploads', express.static('uploads'))
 
 
 // Connect to DB

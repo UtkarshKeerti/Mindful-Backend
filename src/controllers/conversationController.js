@@ -23,15 +23,17 @@ exports.addConversation = async (req, res) => {
   //   }
   // }
 
+  // console.log('VBBBB', path.join('../../uploads/', req.file.filename))
+
   try {
 
     // const data = fs.readFileSync(path.join(appRootPath + '/uploads/' + req.file.filename)).toString('base64')
+    const data = fs.readFileSync(path.join('uploads', req.file.filename)).toString('base64')
 
     const obj = {
       ...req.body,
       image: {
-        data: `${process.env.SERVER_URL}/uploads/${req.file.filename}`,
-        // data: `data:${req.file.mimetype};base64,${data}`,
+        data: `data:${req.file.mimetype};base64,${data}`,
         filename: req.file.filename
       }
     }
