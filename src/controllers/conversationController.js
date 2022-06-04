@@ -1,47 +1,15 @@
 // Models
 const Conversations = require('../models/Conversations');
 const Events = require('../models/Events');
-const fs = require('fs');
-const path = require('path')
-require('dotenv/config');
 
 
 // Add Conversation
-// NO async due to multer image thingy
 exports.addConversation = async (req, res) => {
 
-  // console.log('FILE', req.file)
-
-  // const obj = {
-  //   name: req.body.name,
-  //   about: req.body.about,
-  //   events: req.body.events,
-  //   speakers: req.body.speakers,
-  //   image: {
-  //     data: fs.readFileSync(path.join(appRootPath + '/uploads/' + req.file.filename)),
-  //     contentType: req.file.mimetype
-  //   }
-  // }
-
-  // console.log('VBBBB', path.join('../../uploads/', req.file.filename))
-
   try {
-
-    // const data = fs.readFileSync(path.join(appRootPath + '/uploads/' + req.file.filename)).toString('base64')
-    const data = fs.readFileSync(path.join('uploads', req.file.filename)).toString('base64')
-
-    const obj = {
-      ...req.body,
-      image: {
-        data: `data:${req.file.mimetype};base64,${data}`,
-        filename: req.file.filename
-      }
-    }
-
-    const conversation = new Conversations(obj)
+    const conversation = new Conversations(req.body)
     const convoSave = conversation.save();
 
-    if (!conversation.name) throw "Conversation not saved"
     res.status(200).json({ message: "Conversation Added!" });
 
   } catch (err) {
@@ -66,9 +34,6 @@ exports.getConvoList = async (req, res) => {
 // Get Conversation
 // pass id in query.id to get a particular Conversation
 exports.getConversation = async (req, res) => {
-
-  // const cursor = bucket.find();
-  // cursor.forEach(doc => console.log(doc));
 
   try {
     let getConversation;

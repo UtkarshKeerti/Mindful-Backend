@@ -1,58 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-// const mongoose = require('mongoose');
-// const { GridFsStorage } = require('multer-gridfs-storage');
-// const Grid = require('gridfs-stream');
-// require('dotenv/config');
 
 // Controllers
 const memberController = require('../controllers/memberController');
 const conversationController = require('../controllers/conversationController');
 const speakerController = require('../controllers/speakerController');
 const eventController = require('../controllers/eventController');
-
-
-// const conn = mongoose.createConnection(process.env.DB_URL);
-
-// Init gfs
-// let gfs;
-// conn.once('open', () => {
-//   // Init stream
-//   gfs = Grid(conn.db, mongoose.mongo);
-//   gfs.collection('uploads');
-// })
-
-// Storage engine
-// const storage = new GridFsStorage({
-//   url: process.env.DB_URL,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//       const filename = Date.now() + '_' + file.originalname;
-//       const fileInfo = {
-//         filename: filename,
-//         bucketName: 'uploads'
-//       };
-//       resolve(fileInfo)
-//     });
-//   }
-// });
-
-// storage policy for multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')
-    cb(null, true)
-  else cb(Error('upload only jpeg, jpg, png file'), false)
-}
-const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 // ----- Members API ----- //
@@ -77,7 +30,7 @@ router.delete('/member', memberController.deleteMember);
 
 // Add conversation
 router.post('/conversation',
-  upload.single('image'),
+  // upload.single('image'),
   conversationController.addConversation
 );
 
