@@ -29,10 +29,7 @@ router.delete('/member', memberController.deleteMember);
 // ----- Series/Conversation API ----- //
 
 // Add conversation
-router.post('/conversation',
-  // upload.single('image'),
-  conversationController.addConversation
-);
+router.post('/conversation', conversationController.addConversation);
 
 // get the list of conversatoin
 router.get('/conversation-list', conversationController.getConvoList);
@@ -91,6 +88,10 @@ router.put('/event', eventController.updateEvent);
 
 // Delete Event
 router.delete('/event', eventController.deleteEvent);
+
+// Get event image
+// /event-image/?id=12312312,123123,12edqd123
+router.get('/event-image', eventController.getEventImage);
 
 
 

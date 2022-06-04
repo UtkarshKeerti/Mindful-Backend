@@ -123,3 +123,23 @@ exports.deleteEvent = async (req, res) => {
     res.status(500).json({ message: err })
   }
 }
+
+// Get event Image url
+exports.getEventImage = async (req, res) => {
+  try {
+    const arrayOfIds = req.query.id.split(',')
+    const eve = await Events.find(
+      {
+        _id: {
+          $in: arrayOfIds
+        }
+      }
+    )
+      .select('image')
+
+    res.status(200).json(eve)
+
+  } catch (error) {
+    console.log("Error while fetching event images", error)
+  }
+}
