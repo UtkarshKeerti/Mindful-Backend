@@ -48,9 +48,36 @@ exports.updateMember = async (req, res) => {
 // Delete member
 exports.deleteMember = async (req, res) => {
   try {
-    const delMember = await Members.deleteOne({ _id: req.query.id })
-    res.status(200).json({ message: "Member Deleted!" })
+    const arrayOdIds = req.query.id.split(',')
+    const delMember = await Members.deleteMany(
+      {
+        _id: {
+          $in: arrayOdIds
+        }
+      }
+    )
+    res.status(200).json({ message: `${delMember.deletedCount} speaker(s) deleted!` })
   } catch (err) {
     res.status(500).json({ message: err })
+  }
+}
+
+// Get member image url
+exports.getMemberImage = async (req, res) => {
+  try {
+    const arrayOfIds = req.query.id.split(',')
+    const member = await Members.find(
+      {
+        _id: {
+          $in: arrayOfIds
+        }
+      }
+    )
+      .select('image')
+
+    res.status(200).json(member)
+
+  } catch (err) {
+    console.log("Error while fetching member images", err)
   }
 }

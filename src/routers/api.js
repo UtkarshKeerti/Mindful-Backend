@@ -25,6 +25,9 @@ router.put('/member', memberController.updateMember);
 // pass /member/?id=1231231
 router.delete('/member', memberController.deleteMember);
 
+// Get member image url
+router.get('/member-image', memberController.getMemberImage);
+
 
 // ----- Series/Conversation API ----- //
 
@@ -67,6 +70,10 @@ router.put('/speaker', speakerController.updateSpeaker);
 // Delete Speaker
 // pass /speaker/?id=1231231
 router.delete('/speaker', speakerController.deleteSpeaker);
+
+// Get event-image
+// /speaker-image/?id=12312312,123123,12edqd123
+router.get('/speaker-image', speakerController.getSpeakerImage)
 
 
 

@@ -117,3 +117,23 @@ exports.deleteSpeaker = async (req, res) => {
     res.status(500).json({ message: err })
   }
 }
+
+// Get speaker image url
+exports.getSpeakerImage = async (req, res) => {
+  try {
+    const arrayOfIds = req.query.id.split(',')
+    const speaker = await Speakers.find(
+      {
+        _id: {
+          $in: arrayOfIds
+        }
+      }
+    )
+      .select('image')
+
+    res.status(200).json(speaker)
+
+  } catch (err) {
+    console.log("Error while fetching speaker images", err)
+  }
+}
