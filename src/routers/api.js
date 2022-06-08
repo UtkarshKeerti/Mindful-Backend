@@ -2,10 +2,23 @@ const express = require('express');
 const router = express.Router();
 
 // Controllers
+const authController = require('../controllers/authController');
 const memberController = require('../controllers/memberController');
 const conversationController = require('../controllers/conversationController');
 const speakerController = require('../controllers/speakerController');
 const eventController = require('../controllers/eventController');
+
+
+// ----- Auth API ----- //
+
+// User Signup
+router.post('/signup', authController.registerUser);
+
+// Admin Login
+router.post('/admin-login', authController.adminLogin);
+
+// User Login
+router.post('/login', authController.loginUser);
 
 
 // ----- Members API ----- //

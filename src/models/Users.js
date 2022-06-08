@@ -1,14 +1,22 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-  name: { type: String },
-  email: { type: String },
-  age: { type: Number },
-  // These questions will be asked during event registration, and will be event related only
-  questions: [{
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: 'questions'
-  }]
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 },
   { timestamps: true }
 );
