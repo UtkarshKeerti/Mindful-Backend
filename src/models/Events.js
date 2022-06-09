@@ -15,14 +15,6 @@ const EventSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'speakers'
   }]
-  //--- ONly for data collection purpose
-  // registeredUser: [{
-  //   type: mongoose.SchemaTypes.ObjectId,
-  //   ref: 'Users'
-  // }],
-  // questions: [{
-  //   type: mongoose.SchemaTypes.ObjectId
-  // }]
 },
   { timestamps: true }
 );

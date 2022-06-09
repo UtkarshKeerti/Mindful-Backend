@@ -7,6 +7,7 @@ const memberController = require('../controllers/memberController');
 const conversationController = require('../controllers/conversationController');
 const speakerController = require('../controllers/speakerController');
 const eventController = require('../controllers/eventController');
+const fuzzySearchController = require('../controllers/fuzzySearchController');
 
 
 // ----- Auth API ----- //
@@ -113,6 +114,11 @@ router.delete('/event', eventController.deleteEvent);
 // /event-image/?id=12312312,123123,12edqd123
 router.get('/event-image', eventController.getEventImage);
 
+
+// ----- Fuzzy Search ----- //
+// /search/?q=event12
+router.get('/search', fuzzySearchController.searchEvents);
+router.get('/search-all', fuzzySearchController.searchFromAll);
 
 
 // ----- Publications API ----- //
