@@ -1,48 +1,88 @@
+const Conversations = require('../models/Conversations');
 const Events = require('../models/Events');
+const Members = require('../models/Members');
 const Speakers = require('../models/Speakers');
 
 // Search From all models
 exports.searchFromAll = async (req, res) => {
   const { q } = req.query;
+  const regexQuery = new RegExp(q, 'i');
+
   let searchResults = []
 
   try {
-    const resultEvents = await Events.aggregate([
-      {
-        $search: {
-          // --- Normal search --- //
-          index: 'searchEvent',
-          text: {
-            query: q,
-            path: ['name', 'description'],
-            fuzzy: {}
-          }
-          // --- Autocomplete --- //
-          // index: 'autocompleteSearch',
-          // autocomplete: {
-          //   query: q,
-          //   path: 'name'
-          // }
-        }
-      }
-    ])
+    // const resultConversation = await Conversations.aggregate([
+    //   {
+    //     $search: {
+    //       index: 'searchConversation',
+    //       text: {
+    //         query: q,
+    //         path: 'name',
+    //         fuzzy: {}
+    //       }
+    //     }
+    //   }
+    // ])
 
-    const resultSpeaker = await Speakers.aggregate([
+    const resultConversations = await Conversations.find(
       {
-        $search: {
-          index: 'searchSpeaker',
-          text: {
-            query: q,
-            path: ['name', 'about'],
-            fuzzy: {}
-          }
-        }
+        "$or": [
+          { name: { $regex: regexQuery } },
+          { about: { $regex: regexQuery } }
+        ],
+      },
+    )
+      .select('name about')
+
+    const resultEvents = await Events.find(
+      {
+        "$or": [
+          { name: { $regex: regexQuery } },
+          { description: { $regex: regexQuery } }
+        ]
       }
-    ])
+    )
+      .select('name description')
+
+    const resultSpeakers = await Speakers.find(
+      {
+        "$or": [
+          { name: { $regex: regexQuery } },
+          { about: { $regex: regexQuery } }
+        ]
+      }
+    )
+      .select('name about')
+
+    const resultMembers = await Members.find(
+      {
+        "$or": [
+          { name: { $regex: regexQuery } },
+          { about: { $regex: regexQuery } },
+          { title: { $regex: regexQuery } }
+        ]
+      }
+    )
+      .select('name title about')
+
 
     searchResults = [
-      ...resultEvents,
-      ...resultSpeaker
+      [
+        { tag: "conversation" },
+        ...resultConversations
+      ],
+      [
+        { tag: "events" },
+        ...resultEvents
+      ],
+      [
+        { tag: "speakers" },
+        ...resultSpeakers
+      ],
+      [
+        { tag: "members" },
+        ...resultMembers
+      ],
     ]
 
     res.status(200).json(searchResults)

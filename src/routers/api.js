@@ -22,6 +22,7 @@ router.post('/admin-login', authController.adminLogin);
 router.post('/login', authController.loginUser);
 
 
+
 // ----- Members API ----- //
 
 // Post member
@@ -118,7 +119,11 @@ router.get('/event-image', eventController.getEventImage);
 // ----- Fuzzy Search ----- //
 // /search/?q=event12
 router.get('/search', fuzzySearchController.searchEvents);
-router.get('/search-all', fuzzySearchController.searchFromAll);
+
+// Site-level-Search
+// /site-search/?id=convr
+router.get('/site-search', fuzzySearchController.searchFromAll);
+
 
 
 // ----- Publications API ----- //
