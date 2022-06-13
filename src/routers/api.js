@@ -8,6 +8,7 @@ const conversationController = require('../controllers/conversationController');
 const speakerController = require('../controllers/speakerController');
 const eventController = require('../controllers/eventController');
 const fuzzySearchController = require('../controllers/fuzzySearchController');
+const publicationController = require('../controllers/publicationController');
 
 
 // ----- Auth API ----- //
@@ -42,6 +43,7 @@ router.delete('/member', memberController.deleteMember);
 
 // Get member image url
 router.get('/member-image', memberController.getMemberImage);
+
 
 
 // ----- Series/Conversation API ----- //
@@ -117,6 +119,7 @@ router.get('/event-image', eventController.getEventImage);
 
 
 // ----- Fuzzy Search ----- //
+
 // /search/?q=event12
 router.get('/search', fuzzySearchController.searchEvents);
 
@@ -129,13 +132,19 @@ router.get('/site-search', fuzzySearchController.searchFromAll);
 // ----- Publications API ----- //
 
 // Add publication
+router.post('/publication', publicationController.addPublication)
 
 // Get Publication
+//pass /publication/?id=123123, to get by Id
+router.get('/publication', publicationController.getPublication)
 
 // Update publication
+//pass /publication/?id=123123
+router.put('/publication', publicationController.updatePublication)
 
 // Delete Publication
-
+// pass /conversation/?id=1231231
+router.delete('/publication', publicationController.deletePublication)
 
 
 // ----- Contact us API ----- //
