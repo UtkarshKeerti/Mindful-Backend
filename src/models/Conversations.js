@@ -14,9 +14,8 @@ const conversationSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'speakers'
   }],
-  about: {
+  description: {
     type: String,
-    required: true
   }
 });
 

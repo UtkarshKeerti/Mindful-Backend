@@ -8,8 +8,10 @@ exports.addConversation = async (req, res) => {
 
   try {
     const conversation = new Conversations(req.body)
-    const convoSave = conversation.save();
 
+    if (!conversation.name) throw "Name is required"
+
+    const convoSave = conversation.save();
     res.status(200).json({ message: "Conversation Added!" });
 
   } catch (err) {
@@ -64,7 +66,7 @@ exports.updateConversation = async (req, res) => {
         $set: req.body
       }
     )
-    res.status(200).json(updateConversation)
+    res.status(200).json({ message: "Conversation updated!" })
   } catch (err) {
     res.status(500).json({ message: err })
   }
