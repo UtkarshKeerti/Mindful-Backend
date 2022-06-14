@@ -9,6 +9,7 @@ const speakerController = require('../controllers/speakerController');
 const eventController = require('../controllers/eventController');
 const fuzzySearchController = require('../controllers/fuzzySearchController');
 const publicationController = require('../controllers/publicationController');
+const UserMessageController = require('../controllers/UserMessageController');
 
 
 // ----- Auth API ----- //
@@ -150,12 +151,15 @@ router.delete('/publication', publicationController.deletePublication)
 // ----- Contact us API ----- //
 
 // Add ContactUs data
+router.post('/contactus', UserMessageController.addMessage);
 
 // Get ContactUs data
-
-// Update
+//pass /contactus/?id=123123, to get by Id
+router.get('/contactus', UserMessageController.getMessage);
 
 // Delete
+// pass /conversation/?id=123134,89123123,09in123
+router.delete('/contactus', UserMessageController.deleteMessages);
 
 
 module.exports = router
