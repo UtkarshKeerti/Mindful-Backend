@@ -24,7 +24,10 @@ exports.getMessage = async (req, res) => {
       getMessages = await UserMessages.findById(req.query.id)
 
     } else getMessages = await UserMessages.find();
-    res.status(200).json(getMessages);
+    res.status(200).json(
+      getMessages.length ? getMessages.sort((a, b) => b.createdAt - a.createdAt)
+        : getMessages
+    );
   } catch (err) {
     res.status(500).json({ message: err })
   }
