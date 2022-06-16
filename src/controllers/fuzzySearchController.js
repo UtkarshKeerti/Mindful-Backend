@@ -28,11 +28,11 @@ exports.searchFromAll = async (req, res) => {
       {
         "$or": [
           { name: { $regex: regexQuery } },
-          { about: { $regex: regexQuery } }
+          { description: { $regex: regexQuery } }
         ],
       },
     )
-      .select('name about')
+      .select('name description image')
 
     const resultEvents = await Events.find(
       {
@@ -42,7 +42,10 @@ exports.searchFromAll = async (req, res) => {
         ]
       }
     )
-      .select('name description')
+      .populate({
+        path: 'speakers',
+        select: 'name'
+      })
 
     const resultSpeakers = await Speakers.find(
       {
@@ -52,7 +55,6 @@ exports.searchFromAll = async (req, res) => {
         ]
       }
     )
-      .select('name about')
 
     const resultMembers = await Members.find(
       {
@@ -63,12 +65,10 @@ exports.searchFromAll = async (req, res) => {
         ]
       }
     )
-      .select('name title about')
-
 
     searchResults = [
       [
-        { tag: "conversation" },
+        { tag: "conversations" },
         ...resultConversations
       ],
       [

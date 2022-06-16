@@ -122,10 +122,10 @@ router.get('/event-image', eventController.getEventImage);
 // ----- Fuzzy Search ----- //
 
 // /search/?q=event12
-router.get('/search', fuzzySearchController.searchEvents);
+// router.get('/search', fuzzySearchController.searchEvents);
 
 // Site-level-Search
-// /site-search/?id=convr
+// /site-search/?q=convr
 router.get('/site-search', fuzzySearchController.searchFromAll);
 
 

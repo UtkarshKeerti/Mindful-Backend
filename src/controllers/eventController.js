@@ -2,7 +2,6 @@
 const Events = require('../models/Events');
 const Conversations = require('../models/Conversations');
 
-
 // Add Event
 exports.addEvent = async (req, res) => {
   try {
